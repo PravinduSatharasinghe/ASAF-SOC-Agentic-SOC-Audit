@@ -1,0 +1,19 @@
+---
+- name: ASAF-SOC Auto-Remediation Playbook
+  hosts: all
+  become: yes
+  tasks:
+
+    # Remediation for CVE-2022-3786 on web-prod-srv01.local
+    - name: Ensure OpenSSL package is upgraded to latest secure version
+      ansible.builtin.package:
+        name: openssl
+        state: latest
+      when: ansible_host == '10.0.4.12'
+
+    # Remediation for CVE-2020-25695 on db-prod-srv01.local
+    - name: Ensure PostgreSQL server package is upgraded to secure version
+      ansible.builtin.package:
+        name: postgresql-server
+        state: latest
+      when: ansible_host == '10.0.4.15'
